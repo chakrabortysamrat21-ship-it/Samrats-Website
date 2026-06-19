@@ -4,6 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Samrat Chakraborty — Portfolio</title>
+
+  <meta name="description" content="Samrat Chakraborty — Sales professional with technical expertise in Cybersecurity and Business Analytics. Portfolio of experience, projects, and skills."/>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
+  <link rel="shortcut icon" href="favicon.ico"/>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://chakrabortysamrat21-ship-it.github.io/Samrats-Website/"/>
+  <meta property="og:title" content="Samrat Chakraborty — Portfolio"/>
+  <meta property="og:description" content="Sales professional with technical expertise in Cybersecurity and Business Analytics. Explore my experience, projects, and skills."/>
+  <meta property="og:image" content="https://chakrabortysamrat21-ship-it.github.io/Samrats-Website/og-image.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Samrat Chakraborty — Portfolio"/>
+  <meta name="twitter:description" content="Sales professional with technical expertise in Cybersecurity and Business Analytics."/>
+  <meta name="twitter:image" content="https://chakrabortysamrat21-ship-it.github.io/Samrats-Website/og-image.png"/>
+
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -502,6 +526,129 @@
       font-size: 12.5px;
       line-height: 1.8;
       margin-bottom: 0.8rem;
+    }
+
+    /* ─── CAREER TRAJECTORY ─── */
+    .trajectory-toggle-wrap { margin-top: 3rem; text-align: center; }
+
+    .trajectory-btn {
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.95rem 2.2rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      transition: background 0.25s, transform 0.25s, border-color 0.25s;
+    }
+
+    .trajectory-btn:hover { background: rgba(232,245,66,0.15); transform: translateY(-2px); border-color: rgba(232,245,66,0.45); }
+    .trajectory-btn .arrow { display: inline-block; transition: transform 0.35s ease; }
+    .trajectory-btn.open .arrow { transform: rotate(180deg); }
+
+    .trajectory-panel {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      margin-top: 0;
+      transition: max-height 0.7s ease, opacity 0.5s ease, margin-top 0.5s ease;
+    }
+
+    .trajectory-panel.open { max-height: 620px; opacity: 1; margin-top: 2.5rem; }
+
+    .trajectory-inner {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2.2rem 2rem 1.6rem;
+    }
+
+    .trajectory-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .trajectory-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.15rem; }
+    .trajectory-sub { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+
+    .trajectory-scroll { position: relative; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .trajectory-scroll::after {
+      content: '';
+      position: absolute; top: 0; right: 0; bottom: 0; width: 36px;
+      background: linear-gradient(90deg, transparent, var(--card));
+      pointer-events: none;
+    }
+    .trajectory-svg { width: 100%; min-width: 760px; height: auto; display: block; }
+
+    .trajectory-mobile-hint { display: none; font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.7rem; text-align: center; }
+    @media (max-width: 900px) { .trajectory-mobile-hint { display: block; } }
+
+    .traj-gridline { stroke: rgba(255,255,255,0.06); stroke-width: 1; }
+    .traj-axis { stroke: rgba(255,255,255,0.14); stroke-width: 1; }
+    .traj-year-label { fill: var(--muted); font-family: 'DM Mono', monospace; font-size: 11px; }
+    .traj-axis-label { fill: var(--muted); font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; }
+
+    .traj-connector { stroke: rgba(255,255,255,0.18); stroke-width: 1; stroke-dasharray: 3 3; }
+
+    .traj-path-glow, .traj-path {
+      fill: none;
+      stroke: var(--accent);
+      stroke-linecap: round;
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      transition: stroke-dashoffset 1.9s cubic-bezier(0.65,0,0.35,1);
+    }
+    .traj-path-glow { stroke-width: 9; opacity: 0.16; filter: blur(3px); }
+    .traj-path { stroke-width: 2.5; }
+    .trajectory-panel.open .traj-path-glow,
+    .trajectory-panel.open .traj-path { stroke-dashoffset: 0; }
+
+    .traj-path-dashed {
+      fill: none; stroke: var(--accent2); stroke-width: 2;
+      stroke-dasharray: 4 5; stroke-linecap: round;
+      opacity: 0; transition: opacity 0.6s ease 1s;
+    }
+    .traj-arrowhead {
+      fill: none; stroke: var(--accent2); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+      opacity: 0; transition: opacity 0.6s ease 1s;
+    }
+    .trajectory-panel.open .traj-path-dashed,
+    .trajectory-panel.open .traj-arrowhead { opacity: 1; }
+
+    .traj-point {
+      opacity: 0; transform: scale(0); transform-origin: center;
+      transition: opacity 0.4s ease, transform 0.45s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .trajectory-panel.open .traj-point { opacity: 1; transform: scale(1); }
+    .traj-point circle.outer { fill: rgba(232,245,66,0.16); }
+    .traj-point circle.inner { fill: var(--accent); }
+    .traj-point.teal circle.outer { fill: rgba(66,245,200,0.16); }
+    .traj-point.teal circle.inner { fill: var(--accent2); }
+
+    @keyframes trajPulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.9; } }
+    .traj-point.pulse circle.outer { animation: trajPulse 1.8s ease-in-out infinite; }
+
+    .traj-label-group { opacity: 0; transition: opacity 0.5s ease; }
+    .trajectory-panel.open .traj-label-group { opacity: 1; }
+    .traj-label-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 12.5px; fill: var(--text); }
+    .traj-label-sub { font-family: 'DM Mono', monospace; font-size: 10px; fill: var(--muted); }
+    .traj-label-stat { font-family: 'DM Mono', monospace; font-size: 10px; fill: var(--accent); }
+    .traj-label-stat.teal { fill: var(--accent2); }
+
+    .trajectory-caption {
+      margin-top: 1rem;
+      font-size: 11px;
+      color: var(--muted);
+      font-style: italic;
     }
 
     #skills { background: var(--bg); }
@@ -1118,9 +1265,90 @@
       </div>
 
     </div>
-  </section>
 
-  <section id="skills">
+    <div class="trajectory-toggle-wrap reveal">
+      <button class="trajectory-btn" id="trajectory-btn" onclick="toggleTrajectory()" type="button">
+        <span class="trajectory-btn-text">View Career Trajectory</span>
+        <span class="arrow">↓</span>
+      </button>
+    </div>
+
+    <div class="trajectory-panel" id="trajectory-panel">
+      <div class="trajectory-inner">
+        <div class="trajectory-header">
+          <span class="trajectory-title">2022 — Present</span>
+          <span class="trajectory-sub">Retail Floor → AI Development</span>
+        </div>
+        <div class="trajectory-scroll">
+          <svg class="trajectory-svg" viewBox="0 0 900 380" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+
+            <line class="traj-gridline" x1="80" y1="55" x2="80" y2="320"/>
+            <line class="traj-gridline" x1="238.6" y1="55" x2="238.6" y2="320"/>
+            <line class="traj-gridline" x1="397.3" y1="55" x2="397.3" y2="320"/>
+            <line class="traj-gridline" x1="556" y1="55" x2="556" y2="320"/>
+            <line class="traj-gridline" x1="714.6" y1="55" x2="714.6" y2="320"/>
+            <line class="traj-axis" x1="80" y1="320" x2="860" y2="320"/>
+
+            <text class="traj-year-label" x="80" y="338" text-anchor="middle">2022</text>
+            <text class="traj-year-label" x="238.6" y="338" text-anchor="middle">2023</text>
+            <text class="traj-year-label" x="397.3" y="338" text-anchor="middle">2024</text>
+            <text class="traj-year-label" x="556" y="338" text-anchor="middle">2025</text>
+            <text class="traj-year-label" x="714.6" y="338" text-anchor="middle">2026</text>
+
+            <text class="traj-axis-label" x="28" y="188" transform="rotate(-90 28 188)" text-anchor="middle">GROWTH →</text>
+
+            <line class="traj-connector" x1="300" y1="197" x2="300" y2="242"/>
+
+            <path class="traj-path-glow" pathLength="1" d="M93,254 C220,259 280,214 384,174 C550,108 650,88 768,82"/>
+            <path class="traj-path" pathLength="1" d="M93,254 C220,259 280,214 384,174 C550,108 650,88 768,82"/>
+
+            <path class="traj-path-dashed" d="M768,82 L807,66"/>
+            <polyline class="traj-arrowhead" points="800,58 807,66 797,70"/>
+
+            <g class="traj-point" style="transition-delay:0.2s">
+              <circle class="outer" cx="93" cy="254" r="10"/>
+              <circle class="inner" cx="93" cy="254" r="4.5"/>
+            </g>
+            <g class="traj-point teal" style="transition-delay:0.55s">
+              <circle class="outer" cx="300" cy="242" r="7"/>
+              <circle class="inner" cx="300" cy="242" r="3.5"/>
+            </g>
+            <g class="traj-point" style="transition-delay:0.75s">
+              <circle class="outer" cx="384" cy="174" r="10"/>
+              <circle class="inner" cx="384" cy="174" r="4.5"/>
+            </g>
+            <g class="traj-point teal pulse" style="transition-delay:1.3s">
+              <circle class="outer" cx="768" cy="82" r="11"/>
+              <circle class="inner" cx="768" cy="82" r="5"/>
+            </g>
+
+            <g class="traj-label-group" style="transition-delay:0.4s">
+              <text class="traj-label-title" x="70" y="205">Harvey Norman</text>
+              <text class="traj-label-sub" x="70" y="219">Retail Salesperson · 2022–24</text>
+              <text class="traj-label-stat" x="70" y="233">+10–30% Sales KPIs</text>
+            </g>
+            <g class="traj-label-group" style="transition-delay:0.65s">
+              <text class="traj-label-title" x="315" y="236">H&amp;M</text>
+              <text class="traj-label-sub" x="315" y="250">Sales Advisor · Sep–Dec 2023</text>
+            </g>
+            <g class="traj-label-group" style="transition-delay:0.9s">
+              <text class="traj-label-title" x="374" y="130">Samsung Electronics</text>
+              <text class="traj-label-sub" x="374" y="144">Sales Ops &amp; UX · 2023–Now</text>
+              <text class="traj-label-stat" x="374" y="158">95%+ Resolution · 30% Upgrades</text>
+            </g>
+            <g class="traj-label-group" style="transition-delay:1.45s">
+              <text class="traj-label-title" x="850" y="30" text-anchor="end">Smart Energy Answers</text>
+              <text class="traj-label-sub" x="850" y="44" text-anchor="end">AI Development Intern · 2026–Now</text>
+              <text class="traj-label-stat teal" x="850" y="58" text-anchor="end">RAG Pipelines · AEO Systems</text>
+            </g>
+          </svg>
+        </div>
+        <p class="trajectory-mobile-hint">← Swipe to explore the full timeline →</p>
+        <p class="trajectory-caption">Illustrative trajectory — scope, technical depth &amp; responsibility across roles, not a literal measured metric.</p>
+      </div>
+    </div>
+
+  </section>
     <div class="section-label">03 — Competencies</div>
     <h2 class="section-title" data-text="Skills">Skills</h2>
     <div class="skills-container">
@@ -1490,6 +1718,17 @@
     function toggleFlip(btn) {
       btn.classList.toggle('flipped');
       btn.closest('.exp-item').querySelector('.exp-detail').classList.toggle('open');
+    }
+
+    function toggleTrajectory() {
+      const panel = document.getElementById('trajectory-panel');
+      const btn = document.getElementById('trajectory-btn');
+      const isOpen = panel.classList.toggle('open');
+      btn.classList.toggle('open', isOpen);
+      btn.querySelector('.trajectory-btn-text').textContent = isOpen ? 'Hide Career Trajectory' : 'View Career Trajectory';
+      if (isOpen) {
+        setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 150);
+      }
     }
 
     function triggerSectionGlitch(section) {
