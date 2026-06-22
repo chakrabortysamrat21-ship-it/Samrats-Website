@@ -1029,7 +1029,7 @@
   height: 100%;
   width: 0%;
   background: #e8f542;
-  transition: width 0.05s linear;
+  transition: width 0.1s linear;
   position: relative;
 }
 .lc-bar::after {
@@ -1903,20 +1903,32 @@
   doGlitch();
 
   function startBar() {
-    barWrap.classList.add('show');
-    pct.classList.add('show');
-    let progress = 0;
-    const speeds = [0.8,1.2,0.5,1.5,0.9,1.1,0.6,1.4,1.0,0.7];
-    let si = 0;
-    const interval = setInterval(() => {
-      const inc = speeds[si % speeds.length] * (progress < 70 ? 1.4 : progress < 90 ? 0.8 : 0.4);
-      progress = Math.min(100, progress + inc);
-      bar.style.width = progress + '%';
-      pct.textContent = Math.round(progress) + '%';
-      si++;
-      if (progress >= 100) { clearInterval(interval); setTimeout(exitLoader, 350); }
-    }, 40);
+  barWrap.classList.add('show');
+  pct.classList.add('show');
+
+  let progress = 0;
+  let lastTime = performance.now();
+
+  function tick(now) {
+    const dt = (now - lastTime) / 1000; // seconds
+    lastTime = now;
+
+    // ease-out: faster early, slower near the end — but smooth, no randomness
+    const speed = progress < 70 ? 55 : progress < 90 ? 30 : 12; // % per second
+    progress = Math.min(100, progress + speed * dt);
+
+    bar.style.width = progress + '%';
+    pct.textContent = Math.round(progress) + '%';
+
+    if (progress < 100) {
+      requestAnimationFrame(tick);
+    } else {
+      setTimeout(exitLoader, 350);
+    }
   }
+
+  requestAnimationFrame(tick);
+}
 
   function exitLoader() {
     document.body.style.overflow = '';
